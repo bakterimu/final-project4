@@ -1,51 +1,27 @@
 'use strict';
 const {
-  Model
+    Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Comment extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-      Comment.hasOne(models.User, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-        foreignKey: 'Userid'
-      })
-    }
-  };
-  Comment.init({
-    id: DataTypes.INTEGER,
-    Userid: {
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: true,
-        notEmpty: true,
-        isInt: true
-      }
-    },
-    Photoid: {
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: true,
-        notEmpty: true,
-        isInt: true
-      }
-    },
-    comment: {
-      type: DataTypes.TEXT,
-      validate: {
-        notNull: true,
-        notEmpty: true,
-      }
-    }
-  }, {
-    sequelize,
-    modelName: 'Comment',
-  });
-  return Comment;
+    class Comment extends Model {
+        /**
+         * Helper method for defining associations.
+         * This method is not a part of Sequelize lifecycle.
+         * The `models/index` file will call this method automatically.
+         */
+        static associate(models) {
+            // define association here
+            Comment.belongsTo(models.User, { foreignKey: "users_id" });
+            Comment.belongsTo(models.Photo, { foreignKey: "photo_id" });
+        }
+    };
+    Comment.init({
+        users_id: DataTypes.INTEGER,
+        photo_id: DataTypes.INTEGER,
+        comment: DataTypes.TEXT
+    }, {
+        sequelize,
+        modelName: 'Comment',
+    });
+    return Comment;
 };

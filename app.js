@@ -7,8 +7,11 @@ const userRoutes = require('./routes/userRoutes.js');
 const port = 8000;
 const app = express();
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+require('./routes')(app);
 app.use(userRoutes);
+
 app.listen(port, () => {
-  console.log('Listening on port: ', port);
+    console.log('Listening on port: ', port);
 });
