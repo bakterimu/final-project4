@@ -11,64 +11,69 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Comment, { foreignKey: 'Userid' });
-      User.belongsTo(models.Photo, { foreignKey: 'Userid' });
-      User.belongsTo(models.SocialMedia), { foreignKey: 'Userid' };
+      User.hasMany(models.Comment, {
+        foreignKey: 'Userid'
+      });
+      // User.belongsTo(models.Photo, { foreignKey: 'Userid' });
+      // User.belongsTo(models.SocialMedia), { foreignKey: 'Userid' };
     }
   };
   User.init({
-    id: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+      },
     full_name: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
       }
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         isEmail: true,
-        notNull: true,
         notEmpty: true
       },
       unique: true,
     },
     username: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true
       },
       unique: true,
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
       }
     },
-    profile_image: {
+    profile_img_url: {
       type: DataTypes.TEXT,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
         isUrl: true
       }
     },
     age: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
         isInt: true
       }
     },
     phone_number: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
         isInt: true
       }

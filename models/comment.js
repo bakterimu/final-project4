@@ -11,35 +11,36 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Comment.hasOne(models.User, {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+      Comment.belongsTo(models.User, {
         foreignKey: 'Userid'
       })
     }
   };
   Comment.init({
-    id: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     Userid: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
         isInt: true
       }
     },
     Photoid: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
         isInt: true
       }
     },
     comment: {
       type: DataTypes.TEXT,
+      allowNull: false,
       validate: {
-        notNull: true,
         notEmpty: true,
       }
     }

@@ -4,10 +4,11 @@ const jwt = require("jsonwebtoken");
 
 class userController {
   static createUser = (req, res) => {
-    let { email, full_name, username, profile_img_url, age, phone_number } =
+    let { id, email, full_name, username, profile_img_url, age, phone_number } =
       req.body;
     let hash = bcrypt.hashSync(req.body.password, 10);
     let input = {
+      id: id,
       email: email,
       full_name: full_name,
       username: username,
@@ -24,6 +25,7 @@ class userController {
       .catch((err) => {
         let errCode = 500;
         if (err.name.includes("DatabaseError")) {
+          console.log(err);
           errCode = 400;
         }
         res.status(errCode).json(err);
