@@ -24,6 +24,7 @@ class userController {
       .catch((err) => {
         let errCode = 500;
         if (err.name.includes("DatabaseError")) {
+          console.log(err);
           errCode = 400;
         }
         res.status(errCode).json(err);
@@ -108,8 +109,5 @@ class userController {
       });
   };
 }
-
-
-
 
 module.exports = userController;
