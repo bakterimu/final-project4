@@ -1,10 +1,10 @@
-const Photo = require('../models').Photo;
+const SocialMedia = require('../models').SocialMedia;
 const User = require('../models').User;
-const Comment = require('../models').Comment;
+
 
 module.exports = {
     list(req, res) {
-        return Photo.findAll({
+        return SocialMedia.findAll({
                 include: [{
                         model: User,
                         attributes: ['id', 'username', 'profile_image_url']
@@ -13,9 +13,7 @@ module.exports = {
                         include: {
                             model: User,
                             attributes: ['username'],
-                        },
-                        model: Comment,
-                        attributes: ['comment'],
+                        }
 
                     }
                 ],
@@ -23,19 +21,18 @@ module.exports = {
                 required: true,
 
             })
-            .then(photo => res.status(200).send(photo))
+            .then(SocialMedia => res.status(200).send(SocialMedia))
             .catch(error => res.status(400).send(error));
     },
     create(req, res) {
         const errObj = {};
-        return Photo
+        return SocialMedia
             .create({
-                title: req.body.title,
-                poster_image_url: req.body.poster_image_url,
-                caption: req.body.caption,
+                name: req.body.name,
+                social_media_url: req.body.social_media_url,
                 users_id: req.body.users_id
             })
-            .then(photo => res.status(201).send(photo)).catch(err => {
+            .then(SocialMedia => res.status(201).send(SocialMedia)).catch(err => {
                 const errors = err.errors
                 const errorList = errors.map(e => {
                     let obj = {}
@@ -51,7 +48,7 @@ module.exports = {
     },
 
     retrieve(req, res) {
-        return Photo
+        return SocialMedia
             .findOne({
                 where: { id: req.params.id },
                 include: [{
@@ -63,41 +60,38 @@ module.exports = {
                             model: User,
                             attributes: ['username'],
                         },
-                        model: Comment,
-                        attributes: ['comment'],
 
                     }
                 ],
             })
-            .then(photo => {
-                if (!photo) {
+            .then(SocialMedia => {
+                if (!SocialMedia) {
                     return res.status(404).send({
-                        message: 'photo Not Found',
+                        message: 'SocialMedia Not Found',
                     });
                 }
-                return res.status(200).send(photo);
+                return res.status(200).send(SocialMedia);
             })
             .catch(error => res.status(400).send(error));
     },
 
     update(req, res) {
-        return Photo
+        return SocialMedia
             .findOne({
                 where: { id: req.params.id }
             })
-            .then(photo => {
-                if (!photo) {
+            .then(SocialMedia => {
+                if (!SocialMedia) {
                     return res.status(404).send({
-                        message: 'photo Not Found',
+                        message: 'SocialMedia Not Found',
                     });
                 }
-                return photo
+                return SocialMedia
                     .update({
-                        title: req.body.title,
-                        poster_image_url: req.body.poster_image_url,
-                        caption: req.body.caption,
+                        name: req.body.name,
+                        social_media_url: req.body.social_media_url,
                     })
-                    .then(() => res.status(200).send(photo)) // Send back the updated photo.
+                    .then(() => res.status(200).send(SocialMedia)) // Send back the updated SocialMedia.
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
@@ -105,17 +99,17 @@ module.exports = {
 
 
     destroy(req, res) {
-        return Photo
+        return SocialMedia
             .findOne({
                 where: { id: req.params.id }
             })
-            .then(photo => {
-                if (!photo) {
+            .then(SocialMedia => {
+                if (!SocialMedia) {
                     return res.status(400).send({
-                        message: 'photo Not Found',
+                        message: 'SocialMedia Not Found',
                     });
                 }
-                return photo
+                return SocialMedia
                     .destroy()
                     .then(() => res.status(204).send())
                     .catch(error => res.status(400).send(error));
