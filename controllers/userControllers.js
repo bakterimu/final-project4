@@ -42,7 +42,7 @@ class userController {
           res.status(404).json({ msg: "User tidak ditemukan" });
         } else {
           if (bcrypt.compare(req.body.password, data.password)) {
-            let token = jwt.sign(data, "rahasia");
+            let token = jwt.sign(data.toJSON(), "rahasia");
             response.status(200).json({
               token: token,
             });
