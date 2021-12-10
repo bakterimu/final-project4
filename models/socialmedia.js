@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   SocialMedia.init({
-    name: {type : DataTypes.STRING ,
+    name: {type : DataTypes.STRING ,   allowNull: false,
       validate: {
         notNull: {
             msg: 'Please enter your name !'
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     },
-    social_media_url: {type: DataTypes.STRING,
+    social_media_url: {type: DataTypes.STRING,   allowNull: false,
       validate: {
         notNull: {
           msg: 'Please enter your Social Media !'

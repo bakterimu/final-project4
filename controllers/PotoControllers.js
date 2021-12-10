@@ -4,6 +4,7 @@ const Comment = require('../models').Comment;
 
 module.exports = {
     list(req, res) {
+      
         return Photo.findAll({
                 include: [{
                         model: User,
@@ -28,12 +29,14 @@ module.exports = {
     },
     create(req, res) {
         const errObj = {};
+        // const token = request.headers['token']
+        // let decoded = jwt.verify(token, "rahasia");
         return Photo
             .create({
                 title: req.body.title,
                 poster_image_url: req.body.poster_image_url,
                 caption: req.body.caption,
-                users_id: req.body.users_id
+                users_id: 1
             })
             .then(photo => res.status(201).send(photo)).catch(err => {
                 const errors = err.errors
