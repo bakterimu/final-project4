@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./routes')
+const userRoutes = require('./routes/userRoutes.js');
 // const photoRoutes = require('./routes/photoRoutes.js');
 // const commentRoutes = require('./routes/commentRoutes');
 // const socialMediaRoutes = require('./routes/socialMediaRoutes.js');
@@ -9,7 +9,8 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(routes);
+require('./routes')(app);
+app.use(userRoutes);
 
 app.listen(port, () => {
     console.log('Listening on port: ', port);
