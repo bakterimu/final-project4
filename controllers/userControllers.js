@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 class userController {
   static createUser = (req, res) => {
-    let { email, full_name, username, profile_img_url, age, phone_number } =
+    let { email, full_name, username, profile_image_url, age, phone_number } =
       req.body;
     let hash = bcrypt.hashSync(req.body.password, 10);
     let input = {
@@ -12,7 +12,7 @@ class userController {
       full_name: full_name,
       username: username,
       password: hash,
-      profile_img_url: profile_img_url,
+      profile_image_url: profile_image_url,
       age: age,
       phone_number: phone_number,
     };
@@ -64,7 +64,6 @@ class userController {
             res.status(200).send({
                 token: token,
             });
-            // res.send("hallo");
         }).catch(err => {
             res.status(500).send({
                 auth: false,
@@ -72,8 +71,7 @@ class userController {
                 accessToken: null,
                 message: "Error",
                 errors: err
-            });
-            // res.send("anjirr");
+            })
         });
 };
 
