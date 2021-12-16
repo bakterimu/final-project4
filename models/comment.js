@@ -15,32 +15,32 @@ module.exports = (sequelize, DataTypes) => {
   }
   Comment.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-      },
+      // id: {
+      //   type: DataTypes.INTEGER,
+      //   primaryKey: true,
+      // },
       user_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-          isInt: true,
-        },
+        // allowNull: false,
+        // validate: {
+        //   notEmpty: true,
+        //   isInt: true,
+        // },
       },
       photo_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-          isInt: true,
-        },
+        // allowNull: false,
+        // validate: {
+        //   notEmpty: true,
+        //   isInt: true,
+        // },
       },
       comment: {
         type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        // allowNull: false,
+        // validate: {
+        //   notEmpty: true,
+        // },
       },
     },
     {

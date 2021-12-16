@@ -26,11 +26,13 @@ module.exports = {
     },
     create(req, res) {
         const errObj = {};
+        const token = request.headers['token']
+        let decoded = jwt.verify(token, "rahasia");
         return SocialMedia
             .create({
                 name: req.body.name,
                 social_media_url: req.body.social_media_url,
-                users_id: req.body.users_id
+                users_id: decoded.id
             })
             .then(SocialMedia => res.status(201).send(SocialMedia)).catch(err => {
                 const errors = err.errors

@@ -1,10 +1,11 @@
 const Photo = require('../models').Photo;
 const User = require('../models').User;
 const Comment = require('../models').Comment;
+const jwt = require("jsonwebtoken");
 
 module.exports = {
     list(req, res) {
-      
+     
         return Photo.findAll({
                 include: [{
                         model: User,
@@ -29,14 +30,14 @@ module.exports = {
     },
     create(req, res) {
         const errObj = {};
-        // const token = request.headers['token']
-        // let decoded = jwt.verify(token, "rahasia");
+        const token = request.headers['token']
+        let decoded = jwt.verify(token, "rahasia");
         return Photo
             .create({
                 title: req.body.title,
                 poster_image_url: req.body.poster_image_url,
                 caption: req.body.caption,
-                users_id: 1
+                users_id: decoded.id
             })
             .then(photo => res.status(201).send(photo)).catch(err => {
                 const errors = err.errors

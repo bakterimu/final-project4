@@ -24,10 +24,10 @@ module.exports = {
         type: Sequelize.TEXT
       },
       age: {
-        type: Sequelize.INTEGER
+        type: Sequelize.NUMBER
       },
       phone_number: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

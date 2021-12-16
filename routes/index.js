@@ -2,6 +2,7 @@ const potoController = require('../controllers/PotoControllers');
 const commentController = require('../controllers/commentController.js');
 const userController = require('../controllers/userControllers.js');
 const SocialMediaController = require('../controllers/SocialMediaControllers');
+const midleware = require('../midleware/authtoken')
 
 
 module.exports = (app) => {
@@ -10,16 +11,16 @@ module.exports = (app) => {
     }));
 
     app.post('/users/register', userController.createUser);
-    app.post('/users/login', userController.loginUser);
-    app.put('/cek/:id', userController.retrieve);
-    app.put('/users/:userId', userController.editUser);
-    app.delete('/users/:userId', userController.deleteUser);
+    app.post('/users/login', userController.signin);
+    // app.put('/cek/:id', userController.retrieve);
+    app.put('/users/:userId',midleware.authenticateToken, userController.editUser);
+    app.delete('/users/:userId',midleware.authenticateToken, userController.deleteUser);
 
-    app.get('/Photos', potoController.list);
-    app.post('/Photos', potoController.create);
-    app.get('/Photos/:id', potoController.retrieve);
-    app.put('/Photos/:id', potoController.update);
-    app.delete('/Photos/:id', potoController.destroy);
+    app.get('/Photos',midleware.authenticateToken, potoController.list);
+    app.post('/Photos',midleware.authenticateToken,potoController.create);
+    app.get('/Photos/:id',midleware.authenticateToken, potoController.retrieve);
+    app.put('/Photos/:id',midleware.authenticateToken, potoController.update);
+    app.delete('/Photos/:id',midleware.authenticateToken, potoController.destroy);
 
 
 

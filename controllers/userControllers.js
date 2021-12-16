@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { User } = require("./../models");
 const jwt = require("jsonwebtoken");
 
@@ -31,32 +31,51 @@ class userController {
       });
   };
 
-  static loginUser = (req, res) => {
-    User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    })
-      .then((data) => {
-        if (data === (null || "")) {
-          res.status(404).json({ msg: "User tidak ditemukan" });
-        } else {
-          if (bcrypt.compare(req.body.password, data.password)) {
-            let token = jwt.sign(data.toJSON(), "rahasia");
-            response.status(200).json({
-              token: token,
+  static signin(req, res) {
+    return User
+        .findOne({
+            where: { email: req.body.email }
+        }).then(user => {
+            if (!user) {
+                return res.status(404).send({
+                    auth: false,
+                    email: req.body.email,
+                    accessToken: null,
+                    message: "Error",
+                    errors: "User Not Found."
+                });
+            }
+
+            var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+            if (!passwordIsValid) {
+                return res.status(401).send({
+                    auth: false,
+                    email: req.body.email,
+                    accessToken: null,
+                    message: "Error",
+                    errors: "Invalid Password!"
+                });
+            }
+
+            var token = jwt.sign({
+                email: user.email,id : user.id
+            }, 'rahasia');
+
+            res.status(200).send({
+                token: token,
             });
-          } else {
-            response.status(401).json({
-              message: "email atau password tidak valid !",
+            // res.send("hallo");
+        }).catch(err => {
+            res.status(500).send({
+                auth: false,
+                id: req.body.id,
+                accessToken: null,
+                message: "Error",
+                errors: err
             });
-          }
-        }
-      })
-      .catch((err) => {
-        res.status(500).json(err);
-      });
-  };
+            // res.send("anjirr");
+        });
+};
 
   static editUser = (req, res) => {
     let id = req.params.userId;
