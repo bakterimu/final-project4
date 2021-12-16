@@ -1,4 +1,5 @@
 const { User, Comment, Photo } = require("./../models");
+const jwt = require('jsonwebtoken');
 
 class commentController {
   static createComment = (req, res) => {
@@ -6,7 +7,7 @@ class commentController {
     let input = {
       comment: comment,
       photo_id: photo_id,
-      user_id: req.user.id,
+      users_id: jwt.verify(req.headers.token, 'rahasia').id
     };
 
     Comment.create(input)
@@ -25,7 +26,7 @@ class commentController {
 
   static getComment = (req, res) => {
     Comment.findAll({
-      where: { user_id: req.user.id },
+      where: { users_id: jwt.verify(req.headers.token, 'rahasia').id },
       include: [
         {
           model: Photo,
@@ -63,36 +64,38 @@ class commentController {
       },
       {
         where: {
-          id: req.body.comment_id,
+          id: req.params.comment_id,
+          users_id: jwt.verify(req.headers.token, 'rahasia').id
         },
         returning: true,
       }
     )
       .then(() => {
-        return User.findByPk(id);
+        return Comment.findByPk(req.params.comment_id,);
       })
       .then((data) => {
-        if (data > 0) {
+        if (data) {
           res.status(200).json(data);
         } else {
           res.status(404).json({ msg: "User tidak ditemukan" });
         }
       })
       .catch((err) => {
-        res.status(500).json({ msg: "User tidak ditemukan"});
+        res.status(500).json({msg: "err"});
       });
   };
 
   static deleteComment = (req, res) => {
     let id = req.params.comment_id;
-    Comment.delete({
+    Comment.destroy({
       where: {
         id: id,
+        users_id: jwt.verify(req.headers.token, 'rahasia').id
       },
     })
       .then((data) => {
         if (data > 0) {
-          res.status(200).json(data);
+          res.status(200).json({msg: "Data berhasil dihapus"});
         } else {
           res.status(404).json({ msg: "User tidak ditemukan" });
         }
