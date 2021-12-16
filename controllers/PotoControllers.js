@@ -30,7 +30,7 @@ module.exports = {
     },
     create(req, res) {
         const errObj = {};
-        const token = request.headers['token']
+        const token = req.headers['token']
         let decoded = jwt.verify(token, "rahasia");
         return Photo
             .create({
