@@ -33,7 +33,7 @@ module.exports = (app) => {
 
     app.post('/comments', commentController.createComment);
     app.get('/comments', commentController.getComment);
-    // app.put('/comments/:comment_id', commentController.editcomment);
+    app.put('/comments/:comment_id', commentController.editComment);
     app.delete('/comments/:comment_id', commentController.deleteComment);
 
 
