@@ -77,11 +77,16 @@ class commentController {
         if (data) {
           res.status(200).json(data);
         } else {
-          res.status(404).json({ msg: "User tidak ditemukan" });
+          res.status(404).json({ msg: "Comment tidak ditemukan" });
         }
       })
       .catch((err) => {
-        res.status(500).json({msg: "err"});
+        let errCode = 500;
+        if (err.name.includes("DatabaseError")) {
+          console.log(err);
+          errCode = 400;
+        }
+        res.status(errCode).json(err);
       });
   };
 
@@ -97,7 +102,7 @@ class commentController {
         if (data > 0) {
           res.status(200).json({msg: "Data berhasil dihapus"});
         } else {
-          res.status(404).json({ msg: "User tidak ditemukan" });
+          res.status(404).json({ msg: "Comment tidak ditemukan" });
         }
       })
       .catch((err) => {
