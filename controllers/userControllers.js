@@ -77,17 +77,15 @@ class userController {
 
   static editUser = (req, res) => {
     let id = req.params.userId;
-    let prevData = jwt.verify(req.headers.token, "rahasia");
     let { body } = req;
     User.update(
       {
-        ...prevData,
-        email: body.email ?? prevData.email,
-        full_name: full_name ?? prevData.full_name,
-        username: body.username ?? prevData.username,
-        profile_img_url: body.profile_img_url ?? prevData.profile_img_url,
-        age: body.age ?? prevData.age,
-        phone_number: body.phone_number ?? prevData.phone_number,
+        email: body.email,
+        full_name: body.full_name,
+        username: body.username,
+        profile_img_url: body.profile_img_url,
+        age: body.age,
+        phone_number: body.phone_number,
       },
       {
         where: {
@@ -109,14 +107,14 @@ class userController {
 
   static deleteUser = (req, res) => {
     let id = req.params.userId;
-    User.delete({
+    User.destroy({
       where: {
         id: id,
       },
     })
       .then((data) => {
         if (data > 0) {
-          res.status(200).json(data);
+          res.status(200).json({msg: "User berhasil dihapus!"});
         } else {
           res.status(404).json({ msg: "User tidak ditemukan" });
         }
