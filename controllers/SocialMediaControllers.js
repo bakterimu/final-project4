@@ -1,5 +1,6 @@
 const SocialMedia = require('../models').SocialMedia;
 const User = require('../models').User;
+const jwt = require("jsonwebtoken");
 
 
 module.exports = {
@@ -7,15 +8,9 @@ module.exports = {
         return SocialMedia.findAll({
                 include: [{
                         model: User,
-                        attributes: ['id', 'username', 'profile_image_url']
+                        attributes: ['id', 'username', 'profile_image_url'],
                     },
-                    {
-                        include: {
-                            model: User,
-                            attributes: ['username'],
-                        }
-
-                    }
+                    
                 ],
 
                 required: true,
@@ -26,7 +21,7 @@ module.exports = {
     },
     create(req, res) {
         const errObj = {};
-        const token = request.headers['token']
+        const token = req.headers['token']
         let decoded = jwt.verify(token, "rahasia");
         return SocialMedia
             .create({
@@ -113,7 +108,7 @@ module.exports = {
                 }
                 return SocialMedia
                     .destroy()
-                    .then(() => res.status(204).send())
+                    .then(() => res.status(200).send({ message: 'SocialMedia Berhasil di Hapus',}))
                     .catch(error => res.status(400).send(error));
             })
             .catch(error => res.status(400).send(error));

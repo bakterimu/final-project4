@@ -6,13 +6,16 @@ const midleware = require('../midleware/authtoken')
 
 
 module.exports = (app) => {
+    app.get('*', (req, res) => {
+        res.status(200).send({
+            message: 'hacktiv8.com',team:[{nama:"wahyu taqdirul aziz",kode:"INJSKS003"}]});
+    });
     app.get('/api', (req, res) => res.status(200).send({
         message: 'hacktiv8.com',
     }));
 
     app.post('/users/register', userController.createUser);
     app.post('/users/login', userController.signin);
-    // app.put('/cek/:id', userController.retrieve);
     app.put('/users/:userId',midleware.authenticateToken, userController.editUser);
     app.delete('/users/:userId',midleware.authenticateToken, userController.deleteUser);
 
@@ -24,17 +27,17 @@ module.exports = (app) => {
 
 
 
-    app.get('/Sosmed', SocialMediaController.list);
-    app.post('/Sosmed', SocialMediaController.create);
-    app.get('/Sosmed/:id', SocialMediaController.retrieve);
-    app.put('/Sosmed/:id', SocialMediaController.update);
-    app.delete('/Sosmed/:id', SocialMediaController.destroy);
+    app.get('/Sosmed',midleware.authenticateToken, SocialMediaController.list);
+    app.post('/Sosmed',midleware.authenticateToken, SocialMediaController.create);
+    app.get('/Sosmed/:id',midleware.authenticateToken, SocialMediaController.retrieve);
+    app.put('/Sosmed/:id',midleware.authenticateToken, SocialMediaController.update);
+    app.delete('/Sosmed/:id',midleware.authenticateToken, SocialMediaController.destroy);
 
 
-    app.post('/comments', commentController.createComment);
-    app.get('/comments', commentController.getComment);
-    app.put('/comments/:comment_id', commentController.editComment);
-    app.delete('/comments/:comment_id', commentController.deleteComment);
+    app.post('/comments',midleware.authenticateToken, commentController.createComment);
+    app.get('/comments',midleware.authenticateToken, commentController.getComment);
+    app.put('/comments/:comment_id',midleware.authenticateToken, commentController.editComment);
+    app.delete('/comments/:comment_id',midleware.authenticateToken, commentController.deleteComment);
 
 
 };
