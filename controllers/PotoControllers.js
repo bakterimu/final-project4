@@ -2,6 +2,7 @@ const Photo = require('../models').Photo;
 const User = require('../models').User;
 const Comment = require('../models').Comment;
 const jwt = require("jsonwebtoken");
+const env = require('dotenv').config();
 
 module.exports = {
     list(req, res) {
@@ -31,7 +32,7 @@ module.exports = {
     create(req, res) {
         const errObj = {};
         const token = req.headers['token']
-        let decoded = jwt.verify(token, "rahasia");
+        let decoded = jwt.verify(token, process.env.SECRET);
         return Photo
             .create({
                 title: req.body.title,

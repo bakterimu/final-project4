@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const { User } = require("./../models");
 const jwt = require("jsonwebtoken");
+const env = require('dotenv').config();
 
 class userController {
   static createUser = (req, res) => {
@@ -59,7 +60,7 @@ class userController {
 
             var token = jwt.sign({
                 email: user.email,id : user.id
-            }, 'rahasia');
+            }, process.env.SECRET);
 
             res.status(200).send({
                 token: token,

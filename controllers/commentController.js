@@ -1,5 +1,6 @@
 const { User, Comment, Photo } = require("./../models");
 const jwt = require('jsonwebtoken');
+const env = require('dotenv').config();
 
 class commentController {
   static createComment = (req, res) => {
@@ -7,7 +8,7 @@ class commentController {
     let input = {
       comment: comment,
       photo_id: photo_id,
-      users_id: jwt.verify(req.headers.token, 'rahasia').id
+      users_id: jwt.verify(req.headers.token, process.env.SECRET).id
     };
 
     Comment.create(input)
@@ -26,7 +27,7 @@ class commentController {
 
   static getComment = (req, res) => {
     Comment.findAll({
-      where: { users_id: jwt.verify(req.headers.token, 'rahasia').id },
+      where: { users_id: jwt.verify(req.headers.token, process.env.SECRET).id },
       include: [
         {
           model: Photo,
@@ -65,7 +66,7 @@ class commentController {
       {
         where: {
           id: req.params.comment_id,
-          users_id: jwt.verify(req.headers.token, 'rahasia').id
+          users_id: jwt.verify(req.headers.token, process.env.SECRET).id
         },
         returning: true,
       }
@@ -95,7 +96,7 @@ class commentController {
     Comment.destroy({
       where: {
         id: id,
-        users_id: jwt.verify(req.headers.token, 'rahasia').id
+        users_id: jwt.verify(req.headers.token, process.env.SECRET).id
       },
     })
       .then((data) => {
