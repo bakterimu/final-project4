@@ -6,10 +6,10 @@ const midleware = require('../midleware/authtoken')
 
 
 module.exports = (app) => {
-    // app.get('*', (req, res) => {
-    //     res.status(200).send({
-    //         message: 'hacktiv8.com',team:[{nama:"wahyu taqdirul aziz",kode:"INJSKS003"}]});
-    // });
+    app.get('/', (req, res) => {
+        res.status(200).send({
+            message: 'hacktiv8.com',team:[{nama:"Wahyu Taqdirul Aziz",kode:"INJS-KS-003"}, {nama:'Izhar Mayranda', kode:'INJS-KS-006'}]});
+    });
     app.get('/api', (req, res) => res.status(200).send({
         message: 'hacktiv8.com',
     }));
