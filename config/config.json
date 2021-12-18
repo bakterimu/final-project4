@@ -15,10 +15,10 @@
         "dialect": "postgres"
     },
     "production": {
-        "username": "postgres",
-        "password": "postgres",
-        "database": "final-project-2-new",
-        "host": "localhost",
+        "username": "vndjjgysojrjkv",
+        "password": "8d17f426a1e050d4d962648d42fd87c043ed06747dce0ecf8d47826f3c2870f5",
+        "database": "d3kj1ar1mak107",
+        "host": "ec2-54-205-149-187.compute-1.amazonaws.com",
         "dialect": "postgres",
         "logging": false
     }
