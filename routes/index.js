@@ -27,11 +27,11 @@ module.exports = (app) => {
 
 
 
-    app.get('/Sosmed',midleware.authenticateToken, SocialMediaController.list);
-    app.post('/Sosmed',midleware.authenticateToken, SocialMediaController.create);
-    app.get('/Sosmed/:id',midleware.authenticateToken, SocialMediaController.retrieve);
-    app.put('/Sosmed/:id',midleware.authenticateToken, SocialMediaController.update);
-    app.delete('/Sosmed/:id',midleware.authenticateToken, SocialMediaController.destroy);
+    app.get('/socialmedias',midleware.authenticateToken, SocialMediaController.list);
+    app.post('/socialmedias',midleware.authenticateToken, SocialMediaController.create);
+    app.get('/socialmedias/:id',midleware.authenticateToken, SocialMediaController.retrieve);
+    app.put('/socialmedias/:id',midleware.authenticateToken, SocialMediaController.update);
+    app.delete('/socialmedias/:id',midleware.authenticateToken, SocialMediaController.destroy);
 
 
     app.post('/comments',midleware.authenticateToken, commentController.createComment);
