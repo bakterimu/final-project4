@@ -23,10 +23,10 @@ class userController {
         res.status(201).json(data);
       })
       .catch((err) => {
-        let errCode = 500;
+        let errCode = 400;
         if (err.name.includes("DatabaseError")) {
           console.log(err);
-          errCode = 400;
+          errCode = 500;
         }
         res.status(errCode).json(err);
       });
@@ -38,7 +38,7 @@ class userController {
             where: { email: req.body.email }
         }).then(user => {
             if (!user) {
-                return res.status(404).send({
+                return res.status(401).send({
                     auth: false,
                     email: req.body.email,
                     accessToken: null,
@@ -99,10 +99,14 @@ class userController {
         return User.findByPk(id);
       })
       .then((data) => {
-        res.status(200).json(data);
+        if(!data) {
+          res.status(500).json({msg: "User tidak ditemukan!"});
+        } else {
+          res.status(200).json(data);
+        }
       })
       .catch((err) => {
-        res.status(500).json({ msg: "User tidak ditemukan" });
+        res.status(500).json(err);
       });
   };
 
