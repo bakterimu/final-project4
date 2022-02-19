@@ -2,7 +2,7 @@
     "development": {
         "username": "postgres",
         "password": "postgres",
-        "database": "final-project-2-new",
+        "database": "final-4",
         "host": "localhost",
         "dialect": "postgres",
         "logging": false
@@ -10,7 +10,7 @@
     "test": {
         "username": "postgres",
         "password": "postgres",
-        "database": "final-project-2-new",
+        "database": "final-4",
         "host": "localhost",
         "dialect": "postgres",
         "logging": false

@@ -122,7 +122,9 @@ module.exports = {
                 }
                 return photo
                     .destroy()
-                    .then(() => res.status(204).send())
+                    .then(() => {
+                          res.status(200).json({message: "Data berhasil dihapus"});
+                      })
                     .catch(error => res.status(400).send(error));
             })
             .catch(error => res.status(400).send(error));

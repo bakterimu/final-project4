@@ -44,7 +44,7 @@ describe('POST /users/login Route', () => {
   test('POST /users/login mengembalikan token dan status code 200 jika berhasil login', async () => {
     const response = await request(app)
       .post('/users/login')
-      .send({email: "dimas@gmail.com", password: "izhar123"})
+      .send({email: "hai@gmail.com", password: "halo123"})
       token = response.body.token
       expect(response.status).toBe(200)
       expect(response.body).toHaveProperty('token')
@@ -57,7 +57,7 @@ describe('POST /users/login Route', () => {
   test('POST /users/login tidak mengeluarkan token jika input salah dan status code 401', async () => {
     const response = await request(app)
     .post('/users/login')
-    .send({email: "salah@gmail.com", password: "salah123"})
+    .send({email: "hai@gmail.com", password: "halo123"})
     expect(response.status).toBe(401)
     expect(response.body).not.toHaveProperty('token')
     expect(response.body).toHaveProperty('message')
@@ -70,7 +70,7 @@ describe('POST /users/login Route', () => {
 beforeAll((done) => {
   request(app)
   .post('/users/login')
-  .send({email: "dimas@gmail.com", password: "izhar123"})
+  .send({email: "hai@gmail.com", password: "halo123"})
   .end((err, response) => {
     token = response.body.token;
     done();
@@ -81,7 +81,7 @@ describe('PUT /users/1 mengembalikan output data user yang sudah diubah', () => 
   test('PUT /users/1 mengedit user dengan id 1', async () => {
     const response = await request(app)
     .put('/users/1')
-    .send({email: "dimas123@gmail.com", full_name:"bayu", password:"dimas123", age: 17})
+    .send({email: "haigmail@gmail.com", full_name:"bayu", password:"halo123", age: 17})
     .set('token', token)
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('id')
