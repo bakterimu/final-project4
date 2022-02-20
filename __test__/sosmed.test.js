@@ -3,17 +3,17 @@ const app = require('../app');
 const { User } = require('../models');
 
 const userData = {
-    email: "test@gmail.com",
+    email: "test@test.com",
     full_name: "Test Account",
     username: "test",
     password: "123",
     profile_image_url: "https://www.google.com",
     age: 21,
-    phone_number: "087775764965",
+    phone_number: "087763305916",
 }
 
 const userLogin = {
-    email: 'test@gmail.com',
+    email: 'test@test.com',
     password: '123'
 }
 
@@ -32,7 +32,7 @@ describe("POST socialmedia", () => {
     test("post socialmedia success", async function () {
         const socialmediaData = {
             name: 'SocialMedia Test',
-            social_media_url: 'https://blog.tripcetera.com/id/wp-content/uploads/2020/10/pulau-padar.jpg'
+            social_media_url: 'https://kdoe.id'
         }
         const response = await request(app).post('/socialmedias/').send(socialmediaData).set('token', token)
             
@@ -75,7 +75,7 @@ describe("PUT socialmedia", () => {
     test("put socialmedia success", async () => {
         const socialmediaData = {
             name: 'Update SocialMedia Test',
-            social_media_url: 'https://update.test.com/id/wp-content/uploads/2020/10/pulau-padar.jpg'
+            social_media_url: 'https://kdoe.id'
         }
 
         const response = await request(app).put('/socialmedias/1').send(socialmediaData).set('token', token)

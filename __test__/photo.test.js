@@ -3,17 +3,17 @@ const app = require('../app');
 const { User } = require('../models');
 
 const userData = {
-    email: "test@gmail.com",
+    email: "test@test.com",
     full_name: "Test Account",
     username: "test",
     password: "123",
     profile_image_url: "https://www.google.com",
     age: 21,
-    phone_number: "087775764965",
+    phone_number: "0877633059167",
 }
 
 const userLogin = {
-    email: 'test@gmail.com',
+    email: 'test@test.com',
     password: '123'
 }
 
@@ -31,7 +31,7 @@ beforeAll(async () => {
 describe("POST photo", () => {
     test("post photo success", async function () {
         const photoData = {
-            poster_image_url: 'https://blog.tripcetera.com/id/wp-content/uploads/2020/10/pulau-padar.jpg',
+            poster_image_url: 'https://kdoe.id',
             title: 'Photo Test',
             caption: 'Loasdrem ipsum dolor sit amet, consectetur adipiscing elit. Proin felis dolor, facilisis quis ligula a, efficitur sodales magna. In scelerisque arcu odio, sed lacinia metus pretium sed. Aenean commodo accumsan hendrerit. Morbi vitae varius lorem. Vestibulum tellus dolor, dictum id ultricies lobortis, ultricies et urna. Vestibulum consequat lacinia turpis eget venenatis. Duis lobortis, risus et rhoncus vestibulum, dolor dui lacinia erat, cursus efficitur odio arcu sed odio.',
         }
@@ -80,9 +80,9 @@ describe("GET photo", () => {
 describe("PUT photo", () => {
     test("put photo success", async () => {
         const photoData = {
-            poster_image_url: 'https://update.test.com/id/wp-content/uploads/2020/10/pulau-padar.jpg',
+            poster_image_url: 'https://kdoe.id',
             title: 'Update Photo Test',
-            caption: 'Update Lorem ipsum dolor sit amet'
+            caption: 'Lorem ipsum dolor sit amet'
         }
 
         const response = await request(app).put('/Photos/1').send(photoData).set('token', token)
