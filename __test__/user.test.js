@@ -1,7 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
-const { response } = require('../app.js');
-const { User } = require("./../models");
+const { User } = require("../models");
 let token;
 
 describe('POST /users/register Route', () => {
@@ -42,7 +41,11 @@ describe('POST /users/register Route', () => {
 // Testing POST Login User
 describe('POST /users/login Route', () => {
   test('POST /users/login mengembalikan token dan status code 200 jika berhasil login', async () => {
+    const admin = await request(app)
+    .post('/users/register')
+    .send({email: "admin@gmail.com", full_name:"admin", password:"admin123", profile_image_url:"kode.id", age: 17, phone_number:"0895365278281", username: "admin"})
     const response = await request(app)
+<<<<<<< HEAD:__test__/app.test.js
       .post('/users/login')
       .send({email: "hai@gmail.com", password: "halo123"})
       token = response.body.token
@@ -52,6 +55,17 @@ describe('POST /users/login Route', () => {
       expect(typeof response.body.token).toBe('string')
       expect(typeof response.body).toBe('object')
       expect(response.body.token).toMatch(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRpbWFzQGdtYWlsLmNvbSIsImlkIjoxLCJpYXQiOjE2N/)
+=======
+    .post('/users/login')
+    .send({email: "admin@gmail.com", password: "admin123"})
+    token = response.body.token
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty('token')
+    expect(response.body.token).toBeDefined()
+    expect(typeof response.body.token).toBe('string')
+    expect(typeof response.body).toBe('object')
+    expect(response.body.token).toMatch(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE2N/)
+>>>>>>> origin/test/user:__test__/user.test.js
   });
 
   test('POST /users/login tidak mengeluarkan token jika input salah dan status code 401', async () => {
@@ -67,6 +81,7 @@ describe('POST /users/login Route', () => {
   });
 });
 
+<<<<<<< HEAD:__test__/app.test.js
 beforeAll((done) => {
   request(app)
   .post('/users/login')
@@ -77,6 +92,8 @@ beforeAll((done) => {
   })
 })
 
+=======
+>>>>>>> origin/test/user:__test__/user.test.js
 describe('PUT /users/1 mengembalikan output data user yang sudah diubah', () => {
   test('PUT /users/1 mengedit user dengan id 1', async () => {
     const response = await request(app)
@@ -85,15 +102,20 @@ describe('PUT /users/1 mengembalikan output data user yang sudah diubah', () => 
     .set('token', token)
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('id')
-    // expect(response.body).
+    expect(response.body).toHaveProperty('email')
+    expect(response.body).toHaveProperty('password')
+    expect(response.body).toHaveProperty('age')
+    expect(response.body.email).toBe('dimas123@gmail.com')
   })
 })
+
+
 
 describe('PUT /users/3 mengembalikan output salah ketika user tidak ditemukan', () => {
   test('PUT /users/3', async () => {
     const response = await request(app)
     .put('/users/3')
-    .send({email: "dimas123@gmail.com", full_name:"bayu", password:"dimas123", age: 17})
+    .send({email: "dimas@gmail.com", full_name:"bayu", password:"izhar123", age: 17})
     .set('token', token)
     expect(response.status).toBe(500)
     expect(response.body).toHaveProperty('msg', 'User tidak ditemukan!')

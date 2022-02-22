@@ -87,6 +87,7 @@ class userController {
         profile_img_url: body.profile_img_url,
         age: body.age,
         phone_number: body.phone_number,
+        password: bcrypt.hashSync(req.body.password, 10)
       },
       {
         where: {

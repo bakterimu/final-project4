@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { User } = require('../models')
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['token']
@@ -7,22 +8,30 @@ function authenticateToken(req, res, next) {
         status: false
     })
 
-    jwt.verify(authHeader, 'rahasia', (err, user) => {
-        console.log(err)
-
-        if (err) return res.sendStatus(403).send({
-            message: 'Forbidden',
-            status: false
+    if (authHeader) {
+        User.findOne({
+            where: {
+                email: jwt.verify(authHeader, 'rahasia').email,
+                id: jwt.verify(authHeader, 'rahasia').id
+            }
         })
-
-        req.user = user
-
-        next()
-    })
-}
-
-module.exports = {
-    authenticateToken
-}
-
-
+        .then(data => {
+            if (!data) {
+                return res.status(401).send({
+                    auth: false,
+                    email: req.body.email,
+                    accessToken: null,
+                    message: "Error",
+                    errors: "User Not Found."
+                });
+            } else {
+                next()
+            }
+        })
+        .catch(err => {
+            res.json(err)
+        })
+    }}
+    module.exports = {authenticateToken}
+    
+    
